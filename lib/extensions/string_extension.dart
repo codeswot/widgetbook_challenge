@@ -1,8 +1,12 @@
 /// Extension on strings
 extension StringExtension on String {
-  /// changes first letter to caps
-  String firstLetterInCaps() {
-    if (isEmpty) return '';
-    return '${this[0].toUpperCase()}${substring(1)}';
+  /// changes first letter  of each work to caps
+  String toTitleCase() {
+    return toLowerCase().replaceAllMapped(
+        RegExp(
+          r'[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+',
+        ), (Match match) {
+      return '${match[0]?[0].toUpperCase()}${match[0]?.substring(1).toLowerCase()}';
+    }).replaceAll(RegExp('(_|-)+'), ' ');
   }
 }

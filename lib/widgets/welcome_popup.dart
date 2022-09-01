@@ -30,7 +30,7 @@ class _WelcomePopupDialogState extends State<WelcomePopupDialog> {
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        height: 300,
+        height: 360,
         width: double.infinity,
         padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
