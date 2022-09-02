@@ -1,13 +1,23 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook_challenge/api/widgetbook_api.dart';
+import 'package:widgetbook_challenge/mock/api_mock.dart';
 
 void main() {
   group('Apis', () {
-    final api = WidgetbookApi();
+    late WidgetbookApi api;
+    api = MockApi();
+
     test('Success Welcome', () async {
+      //stub method
+
+      when(() => api.welcomeToWidgetbook(message: 'Musa Damu'))
+          .thenAnswer((_) async => 'Welcome Musa Damu');
+
+      // Interact with the mock.
       expect(
         await api.welcomeToWidgetbook(message: 'Musa Damu'),
-        isInstanceOf<String>(),
+        'Welcome Musa Damu',
       );
     });
   });
