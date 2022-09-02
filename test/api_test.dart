@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook_challenge/api/widgetbook_api.dart';
-import 'package:widgetbook_challenge/mock/api_mock.dart';
+
+import 'mock/api_mock.dart';
 
 void main() {
   group('Apis', () {

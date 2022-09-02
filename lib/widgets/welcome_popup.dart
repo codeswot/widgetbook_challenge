@@ -1,6 +1,6 @@
-import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 ///welcomes the user with style
 class WelcomePopupDialog extends StatefulWidget {
@@ -16,7 +16,8 @@ class WelcomePopupDialog extends StatefulWidget {
 
 class _WelcomePopupDialogState extends State<WelcomePopupDialog> {
   late final ConfettiController _controllerCenter;
-
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
   @override
   void initState() {
     _controllerCenter =
@@ -40,43 +41,36 @@ class _WelcomePopupDialogState extends State<WelcomePopupDialog> {
         child: Stack(
           children: [
             Align(
-              alignment: Alignment.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CircleAvatar(
                     backgroundImage: NetworkImage(
-                        'https://media.istockphoto.com/vectors/cute-orange-cat-waving-paw-cartoon-vector-illustration-vector-id1317718144?k=20&m=1317718144&s=612x612&w=0&h=_IvCcZwBKSacvWjUxnNjJLtu0PSWEGYJbypd0Nfz3XU='),
+                      'https://media.istockphoto.com/vectors/cute-orange-cat-waving-paw-cartoon-vector-illustration-vector-id1317718144?k=20&m=1317718144&s=612x612&w=0&h=_IvCcZwBKSacvWjUxnNjJLtu0PSWEGYJbypd0Nfz3XU=',
+                    ),
                     radius: 50,
                   ),
                   const SizedBox(height: 25),
                   Text(
                     widget.welcomeMessage,
                     style: const TextStyle(
-                        fontSize: 28, fontWeight: FontWeight.bold),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 25),
-                  ArgonButton(
-                    height: 45,
-                    width: 300,
-                    minWidth: 150,
-                    borderRadius: 10,
-                    onTap: (
-                      Function start,
-                      Function stop,
-                      ButtonState state,
-                    ) async {
+                  RoundedLoadingButton(
+                    controller: _btnController,
+                    onPressed: () async {
                       Navigator.of(context).pop();
                     },
-                    loader: const CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
+                    height: 60,
                     child: const Text(
                       'Close',
                       style: TextStyle(color: Colors.white),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

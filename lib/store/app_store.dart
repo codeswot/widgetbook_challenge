@@ -1,22 +1,32 @@
-import 'package:mobx/mobx.dart';
+// ignore_for_file: library_private_types_in_public_api
 
-// Include generated file
+import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+import 'package:widgetbook_challenge/services/app_services.dart';
+
 part 'app_store.g.dart';
 
-/// App Store for managing states
+///
 class AppStore = _AppStore with _$AppStore;
 
-// The store-class
 abstract class _AppStore with Store {
+  final FormErrorState error = FormErrorState();
+
   @observable
   String name = '';
 
-  @observable
-  String validationMessage = '';
+  late List<ReactionDisposer> _disposers;
 
-  @action
-  void setName(String inputName) {
-    name = inputName;
+  void setupValidations() {
+    _disposers = [
+      reaction((_) => name, validateName),
+    ];
+  }
+
+  void dispose() {
+    for (final d in _disposers) {
+      d();
+    }
   }
 
   @action
@@ -24,14 +34,44 @@ abstract class _AppStore with Store {
     const pattern = r"^[a-z ,.'-]+$";
     final regExp = RegExp(pattern, caseSensitive: false);
     if (inputName.isEmpty) {
-      validationMessage = 'Please enter your Name ☺️';
+      error.name = 'Please enter your Name ☺️';
     } else if (!regExp.hasMatch(inputName)) {
-      validationMessage = 'Please enter valid Name ☺️';
+      error.name = 'Please enter valid Name ☺️';
     } else {
-      validationMessage = '';
+      error.name = null;
+    }
+  }
+
+  @action
+  // ignore: use_setters_to_change_properties
+  void setName(String inputName) {
+    name = inputName;
+  }
+
+  void validateAll() {
+    validateName(name);
+  }
+
+  @action
+  Future<void> submitApi(BuildContext context) async {
+    validateAll();
+    final _appServices = AppServices();
+    if (!error.hasErrors) {
+      await _appServices.submitValidation(context);
     }
   }
 }
 
-///global instance of appstore
+///
+class FormErrorState = _FormErrorState with _$FormErrorState;
+
+abstract class _FormErrorState with Store {
+  @observable
+  String? name;
+
+  @computed
+  bool get hasErrors => name != null;
+}
+
+///global class instance
 final appStore = AppStore();

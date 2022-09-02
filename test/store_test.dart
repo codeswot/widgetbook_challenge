@@ -17,19 +17,19 @@ void main() {
     test('Name should be (string) without a numeric character', () {
       appStore.validateName('Musa Damu');
 
-      expect(appStore.validationMessage, '');
+      expect(appStore.error.name, null);
     });
 
     test('Name should be completely empty (String)', () {
       appStore.validateName('');
 
-      expect(appStore.validationMessage, 'Please enter your Name ☺️');
+      expect(appStore.error.name, 'Please enter your Name ☺️');
     });
 
     test('Name should contain numeric character', () {
       appStore.validateName('Musa Damu3');
 
-      expect(appStore.validationMessage, 'Please enter valid Name ☺️');
+      expect(appStore.error.name, 'Please enter valid Name ☺️');
     });
   });
 }

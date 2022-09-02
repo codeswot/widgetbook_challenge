@@ -1,22 +1,31 @@
-import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:widgetbook_challenge/extensions/string_extension.dart';
-import 'package:widgetbook_challenge/services/app_services.dart';
 import 'package:widgetbook_challenge/store/app_store.dart';
-import 'package:widgetbook_challenge/widgets/error_popup.dart';
-import 'package:widgetbook_challenge/widgets/welcome_popup.dart';
 
 /// The app.
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   /// Creates a new instance of [App].
 
   const App({Key? key}) : super(key: key);
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void initState() {
+    appStore.setupValidations();
+    super.initState();
+  }
+
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
+
+  @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final _appServices = AppServices();
     return MaterialApp(
       home: Observer(
         builder: (context) {
@@ -28,73 +37,37 @@ class App extends StatelessWidget {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextFormField(
-                        keyboardType: TextInputType.name,
-                        textCapitalization: TextCapitalization.words,
-                        validator: (String? value) {
-                          appStore.validateName(value!);
-                          if (appStore.validationMessage.isNotEmpty) {
-                            return appStore.validationMessage;
-                          } else {
-                            return null;
-                          }
-                        },
-                        onChanged: (String? value) {
-                          appStore.setName(value!.toTitleCase());
-                        },
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your name',
-                          filled: true,
-                        ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextFormField(
+                      keyboardType: TextInputType.name,
+                      textCapitalization: TextCapitalization.words,
+                      onChanged: (String? value) =>
+                          appStore.setName(value!.toTitleCase()),
+                      decoration: InputDecoration(
+                        hintText: 'Enter your name',
+                        filled: true,
+                        errorText: appStore.error.name,
                       ),
-                      const SizedBox(height: 100),
-                      const Text('Hello Flutter enthusiast!'),
-                      const SizedBox(height: 100),
-                      ArgonButton(
-                        height: 65,
-                        width: 300,
-                        minWidth: 150,
-                        borderRadius: 10,
-                        onTap: (
-                          Function start,
-                          Function stop,
-                          ButtonState state,
-                        ) async {
-                          start();
-                          final res =
-                              await _appServices.submitValidation(_formKey);
-                          stop();
-                          if (res != null) {
-                            if (res.isNotEmpty) {
-                              await showDialog<void>(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) => WelcomePopupDialog(res),
-                              );
-                            }
-                          } else {
-                            await showDialog<void>(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => const ErrorPopUpDialog(),
-                            );
-                          }
-                        },
-                        loader: const CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                        child: const Text(
-                          'Continue',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 100),
+                    const Text('Hello Flutter enthusiast!'),
+                    const SizedBox(height: 100),
+                    RoundedLoadingButton(
+                      controller: _btnController,
+                      onPressed: () async {
+                        _btnController.start();
+                        await appStore.submitApi(context);
+                        _btnController.stop();
+                      },
+                      height: 60,
+                      child: const Text(
+                        'Continue',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -102,5 +75,11 @@ class App extends StatelessWidget {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    appStore.dispose();
+    super.dispose();
   }
 }

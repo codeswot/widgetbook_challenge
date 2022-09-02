@@ -1,5 +1,5 @@
-import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 /// Error dialog
 class ErrorPopUpDialog extends StatelessWidget {
@@ -8,6 +8,7 @@ class ErrorPopUpDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _btnController = RoundedLoadingButtonController();
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -38,26 +39,17 @@ class ErrorPopUpDialog extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 25),
-            ArgonButton(
-              height: 40,
-              width: 300,
-              minWidth: 150,
-              borderRadius: 10,
-              onTap: (
-                Function start,
-                Function stop,
-                ButtonState state,
-              ) async {
+            RoundedLoadingButton(
+              controller: _btnController,
+              onPressed: () async {
                 Navigator.of(context).pop();
               },
-              loader: const CircularProgressIndicator(
-                color: Colors.white,
-              ),
+              height: 60,
               child: const Text(
                 'Close',
                 style: TextStyle(color: Colors.white),
               ),
-            )
+            ),
           ],
         ),
       ),
