@@ -14,7 +14,6 @@ void main() {
       when(() => api.welcomeToWidgetbook(message: 'Musa Damu'))
           .thenAnswer((_) async => 'Welcome Musa Damu');
 
-      // Interact with the mock.
       expect(
         await api.welcomeToWidgetbook(message: 'Musa Damu'),
         'Welcome Musa Damu',
