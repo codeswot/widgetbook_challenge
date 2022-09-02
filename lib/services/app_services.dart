@@ -10,7 +10,7 @@ class AppServices {
   final _widgetBookApi = WidgetbookApi();
 
   /// validates and submits to api
-  Future<void> submitValidation(
+  Future<void> submit(
     BuildContext context,
   ) async {
     try {

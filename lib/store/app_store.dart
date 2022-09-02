@@ -57,7 +57,7 @@ abstract class _AppStore with Store {
     validateAll();
     final _appServices = AppServices();
     if (!error.hasErrors) {
-      await _appServices.submitValidation(context);
+      await _appServices.submit(context);
     }
   }
 }
