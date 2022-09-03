@@ -23,7 +23,7 @@ class AppServices {
       );
     } catch (e) {
       if (kDebugMode) {
-        print('An error occurred$e');
+        print('An error occurred $e');
       }
       await showDialog<void>(
         context: context,
