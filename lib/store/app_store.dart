@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:widgetbook_challenge/extensions/string_extension.dart';
 import 'package:widgetbook_challenge/services/app_services.dart';
 
 part 'app_store.g.dart';
@@ -45,7 +46,7 @@ abstract class _AppStore with Store {
   @action
   // ignore: use_setters_to_change_properties
   void setName(String inputName) {
-    name = inputName;
+    name = inputName.toTitleCase();
   }
 
   void validateAll() {

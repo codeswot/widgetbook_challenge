@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:widgetbook_challenge/extensions/string_extension.dart';
 import 'package:widgetbook_challenge/store/app_store.dart';
 
 /// The app.
@@ -43,8 +42,7 @@ class _AppState extends State<App> {
                     TextFormField(
                       keyboardType: TextInputType.name,
                       textCapitalization: TextCapitalization.words,
-                      onChanged: (String? value) =>
-                          appStore.setName(value!.toTitleCase()),
+                      onChanged: (String? value) => appStore.setName(value!),
                       decoration: InputDecoration(
                         hintText: 'Enter your name',
                         filled: true,
@@ -57,7 +55,6 @@ class _AppState extends State<App> {
                     RoundedLoadingButton(
                       controller: _btnController,
                       onPressed: () async {
-                        _btnController.start();
                         await appStore.submitApi(context);
                         _btnController.stop();
                       },
