@@ -10,6 +10,7 @@ class GreetingBloc extends Bloc<GreetingEvent, GreetingState> {
   GreetingBloc() : super(GreetingInitial()) {
     on<AddGreeting>(_onAddGreeting);
     on<AddGreetingError>(_onAddError);
+    on<InitialGreeting>(_onInitialGreeting);
   }
   void _onAddGreeting(
     AddGreeting events,
@@ -23,5 +24,12 @@ class GreetingBloc extends Bloc<GreetingEvent, GreetingState> {
     Emitter<GreetingState> emit,
   ) {
     emit(GreetingError(value: events.message));
+  }
+
+  void _onInitialGreeting(
+    InitialGreeting events,
+    Emitter<GreetingState> emit,
+  ) {
+    emit(GreetingInitial());
   }
 }

@@ -38,4 +38,15 @@ class AppServices {
           .add(const AddGreetingError(message: 'An Error Occurred'));
     }
   }
+
+  /// method to clear form and reset state to initial
+  void clearForm(
+    BuildContext context, {
+    required TextEditingController controller,
+  }) {
+    context.read<NameBloc>().add(
+          const AddNameError(message: emptyField),
+        );
+    controller.clear();
+  }
 }

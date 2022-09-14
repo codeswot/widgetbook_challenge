@@ -4,10 +4,6 @@ import 'package:widgetbook_challenge/app.dart';
 import 'package:widgetbook_challenge/bloc/app_observer.dart';
 
 void main() {
-  BlocOverrides.runZoned(
-    () {
-      runApp(const App());
-    },
-    blocObserver: AppObserver(),
-  );
+  Bloc.observer = AppObserver();
+  runApp(const App());
 }

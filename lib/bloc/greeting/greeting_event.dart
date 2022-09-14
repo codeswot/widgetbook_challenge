@@ -9,6 +9,15 @@ abstract class GreetingEvent extends Equatable {
 }
 
 /// Event class for handling Greeting events
+class InitialGreeting extends GreetingEvent {
+  /// Creates a new instance of [InitialGreeting].
+  const InitialGreeting();
+
+  @override
+  List<Object?> get props => [];
+}
+
+/// Event class for handling Greeting events
 class AddGreeting extends GreetingEvent {
   /// Creates a new instance of [AddGreeting].
   const AddGreeting({this.greeting = ''});
