@@ -44,11 +44,14 @@ class _WelcomePopupDialogState extends State<WelcomePopupDialog> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://media.istockphoto.com/vectors/cute-orange-cat-waving-paw-cartoon-vector-illustration-vector-id1317718144?k=20&m=1317718144&s=612x612&w=0&h=_IvCcZwBKSacvWjUxnNjJLtu0PSWEGYJbypd0Nfz3XU=',
-                    ),
+                  CircleAvatar(
                     radius: 50,
+                    backgroundColor: Colors.blue.withOpacity(0.5),
+                    child: const Icon(
+                      Icons.tag_faces_rounded,
+                      size: 40,
+                      color: Colors.black,
+                    ),
                   ),
                   const SizedBox(height: 25),
                   Text(

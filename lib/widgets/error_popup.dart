@@ -4,8 +4,10 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 /// Error dialog
 class ErrorPopUpDialog extends StatelessWidget {
   ///
-  const ErrorPopUpDialog({Key? key}) : super(key: key);
+  const ErrorPopUpDialog(this.message, {Key? key}) : super(key: key);
 
+  ///
+  final String message;
   @override
   Widget build(BuildContext context) {
     final _btnController = RoundedLoadingButtonController();
@@ -29,9 +31,9 @@ class ErrorPopUpDialog extends StatelessWidget {
                   const Icon(Icons.error_outline, color: Colors.red, size: 30),
             ),
             const SizedBox(height: 25),
-            const Text(
-              'An Error Occurred',
-              style: TextStyle(
+            Text(
+              message,
+              style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Colors.red,
