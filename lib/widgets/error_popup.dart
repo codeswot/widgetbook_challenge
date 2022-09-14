@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-/// Error dialog
+/// Widget for displaying error response
 class ErrorPopUpDialog extends StatelessWidget {
-  ///
+  /// Creates a new instance of [ErrorPopUpDialog].
   const ErrorPopUpDialog(this.message, {Key? key}) : super(key: key);
 
-  ///
+  ///instance of error message
   final String message;
   @override
   Widget build(BuildContext context) {

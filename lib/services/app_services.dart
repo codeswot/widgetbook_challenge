@@ -4,11 +4,11 @@ import 'package:widgetbook_challenge/api/widgetbook_api.dart';
 import 'package:widgetbook_challenge/bloc/bloc.dart';
 import 'package:widgetbook_challenge/store/constants.dart';
 
-///App Services
+///App Services, handles functionalities of app
 class AppServices {
   final _widgetBookApi = WidgetbookApi();
 
-  /// validates the name form
+  /// validates the name form before submisions
   void formValidation(BuildContext context, {required String input}) {
     const pattern = r"^[a-z ,.'-]+$";
     final regExp = RegExp(pattern, caseSensitive: false);
@@ -21,7 +21,7 @@ class AppServices {
     }
   }
 
-  ///method to submits to api, and return response to Bloc
+  ///method to submit name to api and add response to Bloc event
   Future<void> submit(
     BuildContext context, {
     required String name,

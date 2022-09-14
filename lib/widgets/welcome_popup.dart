@@ -2,9 +2,9 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-///welcomes the user with style
+/// Widget for displaying Success response
 class WelcomePopupDialog extends StatefulWidget {
-  /// Creates a new instance .
+  /// Creates a new instance of [WelcomePopupDialog].
   const WelcomePopupDialog(this.welcomeMessage, {Key? key}) : super(key: key);
 
   /// welcome message text

@@ -10,8 +10,6 @@ void main() {
     api = MockApi();
 
     test('Success Welcome', () async {
-      //stub method
-
       when(() => api.welcomeToWidgetbook(message: 'Musa Damu'))
           .thenAnswer((_) async => 'Welcome Musa Damu');
 
