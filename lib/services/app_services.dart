@@ -10,7 +10,6 @@ class AppServices {
 
   /// validates the name form before submisions
   void formValidation(BuildContext context, {required String input}) {
-    const pattern = r"^[a-z ,.'-]+$";
     final regExp = RegExp(pattern, caseSensitive: false);
     if (input.isEmpty) {
       context.read<NameBloc>().add(const AddNameError(message: emptyField));
